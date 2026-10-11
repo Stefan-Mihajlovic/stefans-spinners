@@ -8,15 +8,15 @@
 .ss-pulse>span{inset:12%;border-radius:50%;background:currentColor;animation-name:ss-pulse}
 .ss-ripple>span{inset:0;border:calc(var(--ss-size)*.045) solid currentColor;border-radius:50%;animation-name:ss-ripple;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-3)}
 .ss-bars>span{width:17%;left:calc(var(--ss-i)*27%);height:65%;border-radius:1px;animation-name:ss-bars}
-.ss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12%;padding:5%}
+.ss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12%;padding:calc(var(--ss-size)*.05)}
 .ss-grid>span{position:relative;width:100%;height:100%;background:currentColor;border-radius:15%;animation-name:ss-grid;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-9)}
 .ss-breathe>span{inset:5%;border:calc(var(--ss-size)*.035) solid currentColor;border-radius:50%;animation-name:ss-breathe;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-2)}
 .ss-comet>span{inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent,currentColor);mask:radial-gradient(farthest-side,transparent 76%,#000 79%);animation-name:ss-spin;animation-timing-function:linear}
 .ss-dual>span{inset:0;border:calc(var(--ss-size)*.06) solid transparent;border-top-color:currentColor;border-bottom-color:currentColor;border-radius:50%;animation-name:ss-spin;animation-timing-function:linear}
 .ss-dual>span:nth-child(2){inset:24%;animation-direction:reverse;opacity:.55}
-.ss-flare>span{width:8%;height:24%;top:0;left:46%;border-radius:9px;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*45deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-8)}
+.ss-flare>span{background:currentColor;width:8%;height:24%;top:0;left:46%;border-radius:9px;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*45deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-8)}
 .ss-flip>span{inset:12%;background:currentColor;border-radius:16%;animation-name:ss-flip}
-.ss-bloom>span{width:25%;height:45%;border-radius:60% 60% 30% 30%;top:0;left:37.5%;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*60deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-6)}
+.ss-bloom>span{background:currentColor;width:25%;height:45%;border-radius:60% 60% 30% 30%;top:0;left:37.5%;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*60deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-6)}
 .ss-chase>span{width:17%;height:17%;border-radius:50%;background:currentColor;top:0;left:41.5%;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*45deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-8)}
 .ss-bounce>span{animation-name:ss-bounce}
 .ss-pendulum>span{animation-name:ss-pendulum;transform-origin:50% -100%;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-9)}

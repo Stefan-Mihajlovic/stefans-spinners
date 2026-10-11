@@ -1,4 +1,4 @@
-import { createElement, type CSSProperties, type HTMLAttributes } from 'react';
+import { createElement, type CSSProperties, type HTMLAttributes, type ReactElement } from 'react';
 import { spinners, type SpinnerVariant } from './catalog';
 export { spinners, type SpinnerName, type SpinnerVariant } from './catalog';
 export interface SpinnerProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'color' | 'children'> {
@@ -17,7 +17,7 @@ export interface SpinnerProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'col
 }
 const positive = (value: number, fallback: number) => Number.isFinite(value) && value > 0 ? value : fallback;
 function createSpinner(variant: SpinnerVariant, count: number) {
-  function Component({ size = 32, color = 'currentColor', speed = 1.2, label = 'Loading', decorative = false, paused = false, className = '', style, ...rest }: SpinnerProps) {
+  function Component({ size = 32, color = 'currentColor', speed = 1.2, label = 'Loading', decorative = false, paused = false, className = '', style, ...rest }: SpinnerProps): ReactElement {
     return createElement('span', {
       ...rest,
       className: `ss-spinner ss-${variant}${paused ? ' ss-paused' : ''}${className ? ` ${className}` : ''}`,
