@@ -34,22 +34,93 @@ There is no default export. Every spinner is a named export. Components are stat
 
 ## Available named exports
 
-Circular: Orbit, Arc, Ring, Ripple, Breathe, Comet, Dual, Radar.
-Dots: Dots, Pulse, Chase, Bounce, Pendulum.
-Bars: Wave, Bars, Stack, Zigzag.
-Geometric: Grid, Flare, Flip, Bloom, Square, Hourglass, Spark.
+Circular: Orbit, Arc, Ring, Ripple, Breathe, Comet, Dual, Radar, Satellite, Eclipse, Vortex, Gyro, Clock.
+Dots: Dots, Pulse, Chase, Bounce, Pendulum, Helix, Binary, Beads, Infinity, Newton, Shuttle, Typing.
+Bars: Wave, Bars, Stack, Zigzag, Domino.
+Geometric: Grid, Flare, Flip, Bloom, Square, Hourglass, Spark, Star, Twinkle, Pinwheel, Asterisk, Constellation, Steps, Tetris, Checker, Diamond, Prism, Fan, Flower, Crosshair.
 
 ## Shared props
 
 - size: number. Diameter in pixels. Default 32. Nonpositive or nonfinite values fall back to 32.
 - color: string. Any CSS color. Default currentColor (inherits text color).
 - speed: number. Seconds per animation cycle. Default 1.2. Smaller values are faster. Nonpositive or nonfinite values fall back to 1.2.
+- easing: SpinnerEasing. One of linear, ease, ease-in, ease-out, ease-in-out. Omit to keep the spinner’s original timing. Applies to all animated parts. Set via --ss-easing in plain CSS.
 - label: string. Accessible label. Default Loading.
 - decorative: boolean. Default false. Set true when surrounding text already identifies the loading state. Removes the status role and label, and sets aria-hidden=true.
 - paused: boolean. Default false. Pauses the CSS animation.
 - className: string. Extra classes appended to the spinner classes.
 - style: React.CSSProperties. Inline styles; user styles take precedence.
 - Other standard span HTML attributes are forwarded, except children and color. Accessibility role, aria-label, and aria-hidden are controlled by label/decorative.
+
+## Shape controls
+
+Each spinner exposes controls for its own geometry. The gallery updates the React example as you adjust them.
+
+```tsx
+<Arc size={48} strokeWidth={5} borderRadius={2.5} arcLength={220} />
+<Ring size={48} strokeWidth={5} trackOpacity={0.2} />
+<Bars size={48} barWidth={8} borderRadius={4} />
+<Bloom size={48} petalWidth={14} petalLength={20} />
+<Dual size={48} outerStrokeWidth={5} innerStrokeWidth={2} />
+<Hourglass size={48} borderRadius={4} />
+```
+
+| Spinner | Props |
+| --- | --- |
+| Orbit | `strokeWidth`, `tilt` |
+| Arc | `strokeWidth`, `borderRadius`, `arcLength` |
+| Ring | `strokeWidth`, `borderRadius`, `arcLength`, `trackStrokeWidth`, `trackOpacity` |
+| Dots | `dotSize`, `borderRadius`, `gap` |
+| Wave | `barWidth`, `borderRadius`, `pulseScale` |
+| Pulse | `borderRadius`, `pulseScale` |
+| Ripple | `strokeWidth`, `pulseScale` |
+| Bars | `barWidth`, `borderRadius`, `pulseScale` |
+| Grid | `gap`, `borderRadius` |
+| Breathe | `firstStrokeWidth`, `secondStrokeWidth` |
+| Comet | `strokeWidth`, `borderRadius`, `arcLength` |
+| Dual | `outerStrokeWidth`, `innerStrokeWidth`, `outerBorderRadius`, `innerBorderRadius`, `outerArcLength`, `innerArcLength` |
+| Flare | `barWidth`, `borderRadius` |
+| Flip | `borderRadius` |
+| Bloom | `petalWidth`, `petalLength` |
+| Chase | `dotSize`, `borderRadius` |
+| Bounce | `dotSize`, `borderRadius`, `gap`, `bounceHeight` |
+| Pendulum | `dotSize`, `gap`, `swing` |
+| Square | `outerStrokeWidth`, `innerStrokeWidth`, `borderRadius` |
+| Stack | `borderRadius`, `gap` |
+| Zigzag | `barWidth`, `borderRadius` |
+| Hourglass | `waistWidth`, `borderRadius` |
+| Radar | `outerStrokeWidth`, `sweepWidth`, `sweepAngle` |
+| Spark | `dotSize`, `borderRadius` |
+| Star | `innerRadius` |
+| Twinkle | `innerRadius`, `pulseScale` |
+| Satellite | `outerStrokeWidth`, `dotSize` |
+| Eclipse | `strokeWidth` |
+| Helix | `dotSize`, `travelDistance` |
+| Pinwheel | `petalWidth`, `petalLength` |
+| Asterisk | `barWidth`, `petalLength`, `borderRadius` |
+| Binary | `dotSize`, `gap` |
+| Beads | `dotSize`, `pulseScale` |
+| Constellation | `dotSize`, `pulseScale` |
+| Vortex | `firstStrokeWidth`, `secondStrokeWidth`, `thirdStrokeWidth`, `borderRadius`, `arcLength` |
+| Gyro | `outerStrokeWidth`, `innerStrokeWidth`, `tilt` |
+| Infinity | `dotSize`, `travelDistance` |
+| Newton | `dotSize`, `swing` |
+| Shuttle | `dotSize`, `strokeWidth`, `travelDistance` |
+| Typing | `dotSize`, `gap`, `pulseScale` |
+| Domino | `barWidth`, `borderRadius`, `tilt` |
+| Steps | `dotSize`, `borderRadius` |
+| Tetris | `dotSize`, `borderRadius` |
+| Checker | `gap`, `borderRadius` |
+| Diamond | `strokeWidth`, `borderRadius`, `pulseScale` |
+| Prism | `petalWidth`, `tilt` |
+| Fan | `petalWidth`, `petalLength`, `borderRadius` |
+| Flower | `petalWidth`, `petalLength`, `borderRadius` |
+| Clock | `outerStrokeWidth`, `innerStrokeWidth`, `trackStrokeWidth`, `petalLength`, `travelDistance`, `borderRadius` |
+| Crosshair | `strokeWidth`, `petalLength`, `borderRadius` |
+
+All geometry props are numbers. Dimensions are in pixels; `tilt`, `swing`, `sweepAngle`, `arcLength`, `outerArcLength`, and `innerArcLength` use degrees. `trackOpacity`, `pulseScale`, and `innerRadius` use fractions from 0 to 1. For Star and Twinkle, `innerRadius` is the inner-to-outer radius ratio. Helix `travelDistance` is the horizontal displacement from its center in pixels; Pinwheel uses `petalWidth` and `petalLength` for its blades. Omitted geometry values use the spinner’s defaults; most scale with `size`. Explicit pixel values keep their size and are clamped to the supported range. Nonfinite values use the default. Unsupported geometry props are ignored. `customizationControls` exports the supported props, units, defaults, and ranges for each spinner; `relative: true` means the metadata’s default/min/max are multiplied by `size`.
+
+Hourglass defaults to a 6 px waist and 8 px corner radius at size 48 (both scale proportionally with `size`); set it to `0` for sharp corners. Its rounded SVG mask is generated when props change, while rotation remains a CSS animation. Dual and Square have separate outer/inner widths; Breathe has first/second ring widths; Radar has a ring width and a sweep width. The legacy `strokeWidth` prop still sets both stroke widths unless a part-specific value overrides it.
 
 ## Accessibility
 
@@ -76,9 +147,30 @@ Import 'stefans-spinners/styles.css' with your bundler or copy dist/styles.css t
 ```
 
 Child counts:
-Orbit 3; Arc 1; Ring 1; Dots 3; Wave 5; Pulse 1; Ripple 3; Bars 4; Grid 9; Breathe 2; Comet 1; Dual 2; Flare 8; Flip 1; Bloom 6; Chase 8; Bounce 3; Pendulum 3; Square 2; Stack 3; Zigzag 5; Hourglass 1; Radar 2; Spark 4.
+Orbit 3; Arc 1; Ring 1; Dots 3; Wave 5; Pulse 1; Ripple 3; Bars 4; Grid 9; Breathe 2; Comet 1; Dual 2; Flare 8; Flip 1; Bloom 6; Chase 8; Bounce 3; Pendulum 3; Square 2; Stack 3; Zigzag 5; Hourglass 1; Radar 2; Spark 4; Star 1; Twinkle 1; Satellite 2; Eclipse 1; Helix 8; Pinwheel 6.
 
-Add ss-paused to the outer span to pause. CSS custom properties: --ss-size, --ss-color, --ss-speed. All class names and keyframes use the ss- prefix. Ring uses color-mix; Comet uses mask and conic-gradient. Target current evergreen browsers.
+Add ss-paused to the outer span to pause. CSS custom properties: --ss-size, --ss-color, --ss-speed, --ss-easing. All class names and keyframes use the ss- prefix. Ring uses color-mix; Comet uses mask and conic-gradient. Target current evergreen browsers.
+
+Shape CSS variables (set on the outer span):
+- --ss-inner-radius: Star and Twinkle innerRadius, unitless fraction.
+- --ss-travel-distance: Helix travelDistance, px.
+- --ss-stroke-width: strokeWidth, px.
+- --ss-outer-stroke-width and --ss-inner-stroke-width: outerStrokeWidth and innerStrokeWidth, px.
+- --ss-first-stroke-width and --ss-second-stroke-width: Breathe ring widths, px.
+- --ss-sweep-width: Radar sweepWidth, px.
+- --ss-tilt: tilt, deg.
+- --ss-track-opacity: trackOpacity, unitless.
+- --ss-dot-size: dotSize, px.
+- --ss-radius: borderRadius, px.
+- --ss-bar-width: barWidth, px.
+- --ss-pulse-scale: pulseScale, unitless.
+- --ss-gap: gap, px.
+- --ss-petal-width: petalWidth, px.
+- --ss-petal-length: petalLength, px.
+- --ss-bounce-height: bounceHeight, px.
+- --ss-swing: swing, deg.
+- --ss-hourglass-mask: custom CSS mask-image value. For CSS-only Hourglass, supply a rounded SVG mask to change its outline; waistWidth and borderRadius are React geometry props that generate this mask, not standalone CSS controls.
+- --ss-sweep-angle: sweepAngle, deg.
 
 ## Catalog
 
@@ -89,3 +181,9 @@ The catalog has no React dependency and returns entries with name, id, category,
 ## Troubleshooting
 
 If a spinner is invisible or static, first confirm the stylesheet is imported. Check whether reduced motion is enabled or paused is true. color="currentColor" needs a contrasting inherited text color. CSS animations intentionally do not indicate real progress percentages.
+
+### Arc geometry
+
+`arcLength`, `outerArcLength`, and `innerArcLength` are measured in degrees. `borderRadius` rounds the ends of Arc, Ring, and Comet; Dual uses independent `outerBorderRadius` and `innerBorderRadius`. Radius is in pixels and visually stops at half the relevant stroke thickness (fully round). Vortex exposes all three stroke widths separately. Arc geometry uses a static SVG mask; motion still runs entirely in CSS. Set geometry through component props; CSS stroke variables alone do not recompute a mask.
+
+For CSS-only Infinity, `--ss-path` is a CSS `path()` value in pixels, with a default path sized for 32px. Use the React component to automatically rebuild it when changing size or loop width.

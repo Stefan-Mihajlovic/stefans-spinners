@@ -1,11 +1,11 @@
 # Stefan's Spinners
 
-> A collection of 24 accessible CSS loading indicators for React and the web, created by Stefan Mihajlovic. MIT licensed.
+> A collection of 50 accessible CSS loading indicators for React and the web, created by Stefan Mihajlovic. MIT licensed.
 
 ## Documentation
 
 - [Complete documentation](https://spinners.stefanmihajlovic.com/llms-full.txt): Installation, all component names, props, examples, accessibility, and CSS-only usage.
-- [Interactive gallery](https://spinners.stefanmihajlovic.com/): Preview and customize all 24 spinners.
+- [Interactive gallery](https://spinners.stefanmihajlovic.com/): Preview and customize all 50 spinners.
 - [Source code](https://github.com/Stefan-Mihajlovic/stefans-spinners): TypeScript source, CSS, and tests.
 - [npm package](https://www.npmjs.com/package/stefans-spinners): stefans-spinners.
 
@@ -23,3 +23,7 @@ import 'stefans-spinners/styles.css';
 ```
 
 React 18 or later. The stylesheet is required. No animation JavaScript is needed.
+
+## Shape customization
+
+Every spinner has its own numeric shape props, such as Arc.arcLength, Arc.borderRadius, Ring.strokeWidth, Bars.borderRadius, Bloom.petalWidth, and Chase.dotSize. See the Shape controls section in llms-full.txt for the full per-component list and units. The gallery updates the React example live.
