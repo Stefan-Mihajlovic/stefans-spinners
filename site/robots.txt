@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://spinners.stefanmihajlovic.com/sitemap.xml

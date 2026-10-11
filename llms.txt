@@ -1,0 +1,25 @@
+# Stefan's Spinners
+
+> A collection of 24 accessible CSS loading indicators for React and the web, created by Stefan Mihajlovic. MIT licensed.
+
+## Documentation
+
+- [Complete documentation](https://spinners.stefanmihajlovic.com/llms-full.txt): Installation, all component names, props, examples, accessibility, and CSS-only usage.
+- [Interactive gallery](https://spinners.stefanmihajlovic.com/): Preview and customize all 24 spinners.
+- [Source code](https://github.com/Stefan-Mihajlovic/stefans-spinners): TypeScript source, CSS, and tests.
+- [npm package](https://www.npmjs.com/package/stefans-spinners): stefans-spinners.
+
+## Quick start
+
+Install: npm install stefans-spinners
+
+Import a named React component and the stylesheet once:
+
+```tsx
+import { Orbit } from 'stefans-spinners';
+import 'stefans-spinners/styles.css';
+
+<Orbit size={32} color="currentColor" speed={1.2} label="Loading" />
+```
+
+React 18 or later. The stylesheet is required. No animation JavaScript is needed.

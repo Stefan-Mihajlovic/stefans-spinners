@@ -1,0 +1,8 @@
+node_modules/
+dist/
+site-dist/
+.netlify/
+*.tgz
+.DS_Store
+.env*
+.npmrc

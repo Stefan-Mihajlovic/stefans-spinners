@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stefan’s Spinners — A little motion. A better wait.</title>
+<meta name="description" content="24 beautifully simple, accessible loading spinners for React and the web. Preview, customize, and copy. Free and open source.">
+<meta name="theme-color" content="#19181c"><link rel="canonical" href="https://spinners.stefanmihajlovic.com/">
+<meta property="og:title" content="Stefan’s Spinners"><meta property="og:description" content="A little motion. A better wait. 24 CSS spinners for React and the web."><meta property="og:type" content="website"><meta property="og:url" content="https://spinners.stefanmihajlovic.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/spinners.css"><link rel="stylesheet" href="/style.css">
+<script type="module" src="/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<aside class="sidebar" id="sidebar">
+<a href="#" class="brand" aria-label="Stefan’s Spinners home"><span class="brand-mark" aria-hidden="true">✳</span><span>Stefan’s<br><strong>Spinners</strong></span></a>
+<button class="search-trigger" id="search-trigger"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg>Find a spinner<kbd>⌘ K</kbd></button>
+<nav aria-label="Spinners"><a href="#" class="overview nav-active">Overview <span>24</span></a><div id="spinner-nav"></div></nav>
+<div class="sidebar-bottom"><a href="https://github.com/Stefan-Mihajlovic/stefans-spinners" target="_blank" rel="noreferrer"><span>↗</span> GitHub</a><a href="https://www.npmjs.com/package/stefans-spinners" target="_blank" rel="noreferrer"><span class="npm-icon">n</span> npm package</a><a href="/llms.txt"><span class="file-icon">↳</span> llms.txt <small>For your AI</small></a><p>Made by <a href="https://stefanmihajlovic.com" target="_blank" rel="noreferrer">Stefan Mihajlovic ↗</a></p></div>
+</aside>
+<div class="mobile-top"><button id="menu" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">☰</button><a href="#">Stefan’s Spinners</a></div>
+<main id="main">
+<header class="topbar"><span>Small details. Better interfaces.</span><div><a href="#guide">Get started</a><button id="theme" class="icon-button" aria-label="Switch to light theme" title="Switch theme">☼</button></div></header>
+<section class="intro"><div class="intro-copy"><div class="release"><span></span>24 spinners. Endless possibilities.</div><h1>A little motion.<br>A better wait.</h1><p>Thoughtful loading indicators for the moments in between.<br class="desktop-br"> Pick one, make it yours, and keep things moving.</p></div><div class="hero-orbit" aria-hidden="true"><span class="ss-spinner ss-orbit" style="--ss-size:126px;--ss-color:#b5a0ff;--ss-speed:9s"><span style="--ss-i:0"></span><span style="--ss-i:1"></span><span style="--ss-i:2"></span></span><span class="orbit-center"></span></div></section>
+<div class="install-bar"><span class="prompt">$</span><code>npm install <span>stefans-spinners</span></code><button data-copy="npm install stefans-spinners" aria-label="Copy install command" title="Copy install command"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V4H4v12h4"/></svg></button></div>
+<div class="library-meta"><span>CSS animations</span><span>TypeScript ready</span><span>MIT licensed</span></div>
+<section aria-label="Spinner library" class="library"><div class="library-toolbar"><div class="filters" role="group" aria-label="Filter spinners"><button class="selected" data-filter="All">All <span>24</span></button><button data-filter="Circular">Circular</button><button data-filter="Dots">Dots</button><button data-filter="Bars">Bars</button><button data-filter="Geometric">Geometric</button></div><button class="pause-button" id="pause" aria-pressed="false"><span>Ⅱ</span> Pause</button></div>
+<div class="customize"><label class="color-control"><input id="color" type="color" value="#b5a0ff" aria-label="Spinner color"><span>Color</span><output id="color-value">#B5A0FF</output></label><label>Size <input id="size" type="range" min="16" max="80" value="36"><output id="size-value">36 px</output></label><label>Speed <input id="speed" type="range" min="0.5" max="3" step="0.1" value="1.2"><output id="speed-value">1.2 s</output></label><button id="reset" title="Reset customization">Reset</button></div>
+<div class="search-row" id="search-row" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="Search by name or category…" aria-label="Search spinners"><button id="close-search" aria-label="Close search">Esc</button></div>
+<div id="grid" class="spinner-grid"></div><div class="empty" id="empty" hidden><h2>No spinners found</h2><p>Try “Orbit”, “dots”, or a different category.</p><button id="clear-search">Show all spinners</button></div>
+<p class="grid-hint">Select a spinner to explore it and grab the code.</p></section>
+<section id="guide" class="guide"><div><span class="section-note">Ready when you are</span><h2>From a little wait<br>to your next project.</h2><p>One install. One stylesheet. Your favorite spinner.</p><a href="/llms-full.txt">Building with AI? Read the full docs ↗</a></div><div class="quick-code"><div class="code-title"><span>App.tsx</span><button id="copy-quick">Copy code</button></div><pre><code><span class="syntax-purple">import</span> { Orbit } <span class="syntax-purple">from</span> <span class="syntax-green">'stefans-spinners'</span>;
+<span class="syntax-purple">import</span> <span class="syntax-green">'stefans-spinners/styles.css'</span>;
+
+<span class="syntax-purple">export default function</span> App() {
+  <span class="syntax-purple">return</span> &lt;Orbit size={32} color="currentColor" /&gt;;
+}</code></pre></div></section>
+<footer><span>Good things are worth the wait.</span><span>Free to use. Yours to make something with. <a href="https://github.com/Stefan-Mihajlovic/stefans-spinners/blob/main/LICENSE">MIT License ↗</a></span></footer>
+</main>
+<dialog id="detail" aria-labelledby="detail-title"><div class="detail-head"><div><span id="detail-category"></span><h2 id="detail-title"></h2></div><button class="close-button" id="close-detail" aria-label="Close spinner details">×</button></div><p id="detail-description"></p><div id="detail-preview" class="detail-preview"></div><div class="detail-actions"><span>Your current color, size & speed</span><button id="copy-link">Copy link</button></div><div class="code-title"><div class="code-tabs" role="group" aria-label="Code language"><button id="react-tab" aria-pressed="true">React</button><button id="html-tab" aria-pressed="false">HTML + CSS</button></div><button id="copy-code">Copy code</button></div><pre class="detail-code"><code id="code"></code></pre><details><summary>Props & accessibility</summary><p>All spinners accept <code>size</code> (pixels), <code>color</code> (CSS color), <code>speed</code> (seconds per cycle), <code>label</code>, <code>paused</code>, and <code>decorative</code>. Add <code>className</code> or <code>style</code> as needed.</p><p>Default label: “Loading”. Use <code>decorative</code> when nearby text already describes the loading state. Reduced-motion preferences are respected automatically.</p></details><div class="detail-navigation"><button id="previous">← Previous</button><span id="detail-position"></span><button id="next">Next →</button></div></dialog>
+<div id="toast" role="status" class="toast"></div>
+</body></html>

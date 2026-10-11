@@ -1,0 +1,23 @@
+{
+  "name": "stefans-spinners",
+  "version": "1.0.0",
+  "description": "24 beautifully simple, accessible CSS spinners for React and the web.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {".": {"types": "./dist/index.d.ts", "import": "./dist/index.js", "require": "./dist/index.cjs"}, "./styles.css": "./dist/styles.css", "./catalog": {"types": "./dist/catalog.d.ts", "import": "./dist/catalog.js", "require": "./dist/catalog.cjs"}, "./package.json": "./package.json"},
+  "files": ["dist", "llms.txt", "llms-full.txt"],
+  "sideEffects": ["**/*.css"],
+  "scripts": {"build": "node scripts/build.mjs", "build:site": "node scripts/site.mjs", "dev": "node scripts/serve.mjs", "test": "npm run build && node --test test/*.test.mjs", "typecheck": "tsc --noEmit", "prepublishOnly": "npm test && npm run typecheck"},
+  "peerDependencies": {"react": ">=18.0.0"},
+  "devDependencies": {"@types/react": "^19.0.0", "esbuild": "^0.25.0", "react": "^19.0.0", "react-dom": "^19.0.0", "typescript": "^5.9.0"},
+  "author": "Stefan Mihajlovic (https://stefanmihajlovic.com)",
+  "license": "MIT",
+  "homepage": "https://spinners.stefanmihajlovic.com",
+  "repository": {"type": "git", "url": "git+https://github.com/Stefan-Mihajlovic/stefans-spinners.git"},
+  "bugs": {"url": "https://github.com/Stefan-Mihajlovic/stefans-spinners/issues"},
+  "keywords": ["spinner", "loading", "react", "css", "animation", "typescript", "accessible"],
+  "publishConfig": {"access": "public"},
+  "engines": {"node": ">=18"}
+}

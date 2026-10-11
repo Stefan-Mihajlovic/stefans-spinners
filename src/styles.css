@@ -1,0 +1,48 @@
+.ss-spinner{--ss-size:32px;--ss-color:currentColor;--ss-speed:1.2s;display:inline-flex;position:relative;width:var(--ss-size);height:var(--ss-size);color:var(--ss-color);flex-shrink:0;vertical-align:middle;box-sizing:border-box;align-items:center;justify-content:center}
+.ss-spinner>span{position:absolute;box-sizing:border-box;display:block;animation-duration:var(--ss-speed);animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+.ss-orbit>span{inset:0;border:calc(var(--ss-size)*.045) solid currentColor;border-radius:50%;transform:rotate(calc(var(--ss-i)*60deg)) rotateX(60deg);animation-name:ss-orbit;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-3)}
+.ss-arc>span{inset:8%;border:calc(var(--ss-size)*.085) solid transparent;border-top-color:currentColor;border-right-color:currentColor;border-radius:50%;animation-name:ss-spin;animation-timing-function:cubic-bezier(.6,.15,.35,.85)}
+.ss-ring>span{inset:4%;border:calc(var(--ss-size)*.075) solid color-mix(in srgb,currentColor 18%,transparent);border-top-color:currentColor;border-radius:50%;animation-name:ss-spin;animation-timing-function:linear}
+.ss-dots>span,.ss-bounce>span,.ss-pendulum>span{width:21%;height:21%;border-radius:50%;background:currentColor;left:calc(var(--ss-i)*36%);animation-name:ss-dot;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-6)}
+.ss-wave>span,.ss-bars>span,.ss-zigzag>span{width:12%;height:80%;background:currentColor;border-radius:10px;left:calc(4% + var(--ss-i)*20%);animation-name:ss-wave;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-7)}
+.ss-pulse>span{inset:12%;border-radius:50%;background:currentColor;animation-name:ss-pulse}
+.ss-ripple>span{inset:0;border:calc(var(--ss-size)*.045) solid currentColor;border-radius:50%;animation-name:ss-ripple;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-3)}
+.ss-bars>span{width:17%;left:calc(var(--ss-i)*27%);height:65%;border-radius:1px;animation-name:ss-bars}
+.ss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12%;padding:5%}
+.ss-grid>span{position:relative;width:100%;height:100%;background:currentColor;border-radius:15%;animation-name:ss-grid;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-9)}
+.ss-breathe>span{inset:5%;border:calc(var(--ss-size)*.035) solid currentColor;border-radius:50%;animation-name:ss-breathe;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-2)}
+.ss-comet>span{inset:0;border-radius:50%;background:conic-gradient(from 0deg,transparent,currentColor);mask:radial-gradient(farthest-side,transparent 76%,#000 79%);animation-name:ss-spin;animation-timing-function:linear}
+.ss-dual>span{inset:0;border:calc(var(--ss-size)*.06) solid transparent;border-top-color:currentColor;border-bottom-color:currentColor;border-radius:50%;animation-name:ss-spin;animation-timing-function:linear}
+.ss-dual>span:nth-child(2){inset:24%;animation-direction:reverse;opacity:.55}
+.ss-flare>span{width:8%;height:24%;top:0;left:46%;border-radius:9px;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*45deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-8)}
+.ss-flip>span{inset:12%;background:currentColor;border-radius:16%;animation-name:ss-flip}
+.ss-bloom>span{width:25%;height:45%;border-radius:60% 60% 30% 30%;top:0;left:37.5%;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*60deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-6)}
+.ss-chase>span{width:17%;height:17%;border-radius:50%;background:currentColor;top:0;left:41.5%;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(var(--ss-i)*45deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-8)}
+.ss-bounce>span{animation-name:ss-bounce}
+.ss-pendulum>span{animation-name:ss-pendulum;transform-origin:50% -100%;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-9)}
+.ss-square>span{inset:8%;border:calc(var(--ss-size)*.05) solid currentColor;animation-name:ss-spin}
+.ss-square>span:nth-child(2){inset:30%;animation-direction:reverse;opacity:.55}
+.ss-stack>span{width:85%;height:16%;background:currentColor;border-radius:2px;top:calc(16% + var(--ss-i)*27%);animation-name:ss-stack;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-6)}
+.ss-zigzag>span{height:50%;border-radius:1px;animation-name:ss-zigzag}
+.ss-hourglass>span{inset:6%;background:currentColor;clip-path:polygon(0 0,100% 0,55% 50%,100% 100%,0 100%,45% 50%);animation-name:ss-hourglass}
+.ss-radar>span:first-child{inset:0;border:calc(var(--ss-size)*.035) solid currentColor;border-radius:50%;opacity:.3}
+.ss-radar>span:last-child{inset:0;border-radius:50%;background:conic-gradient(transparent 65%,currentColor);animation-name:ss-spin;animation-timing-function:linear}
+.ss-spark>span{width:25%;height:25%;background:currentColor;top:0;left:37.5%;transform-origin:50% calc(var(--ss-size)*.5);transform:rotate(calc(45deg + var(--ss-i)*90deg));animation-name:ss-fade;animation-delay:calc(var(--ss-speed)*var(--ss-i)/-4);border-radius:25%}
+@keyframes ss-spin{to{transform:rotate(360deg)}}
+@keyframes ss-orbit{0%{transform:rotate(0) rotateX(65deg) rotateZ(0)}100%{transform:rotate(360deg) rotateX(65deg) rotateZ(180deg)}}
+@keyframes ss-dot{0%,80%,100%{transform:scale(.6);opacity:.35}40%{transform:scale(1);opacity:1}}
+@keyframes ss-wave{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+@keyframes ss-pulse{0%,100%{transform:scale(.45);opacity:.35}50%{transform:scale(1);opacity:1}}
+@keyframes ss-ripple{0%{transform:scale(.1);opacity:0}15%{opacity:1}100%{transform:scale(1);opacity:0}}
+@keyframes ss-bars{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+@keyframes ss-grid{0%,70%,100%{transform:scale(1);opacity:1}35%{transform:scale(.35);opacity:.25}}
+@keyframes ss-breathe{0%,100%{transform:scale(.5);opacity:.3}50%{transform:scale(1);opacity:1}}
+@keyframes ss-fade{0%,100%{opacity:1}65%{opacity:.15}}
+@keyframes ss-flip{0%{transform:perspective(100px) rotateY(0) rotateX(0)}50%{transform:perspective(100px) rotateY(180deg) rotateX(0)}100%{transform:perspective(100px) rotateY(180deg) rotateX(180deg)}}
+@keyframes ss-bounce{0%,70%,100%{transform:translateY(30%)}35%{transform:translateY(-100%)}}
+@keyframes ss-pendulum{0%,100%{transform:rotate(-30deg)}50%{transform:rotate(30deg)}}
+@keyframes ss-stack{0%,100%{transform:translateX(-12%);opacity:.35}50%{transform:translateX(12%);opacity:1}}
+@keyframes ss-zigzag{0%,100%{transform:skewY(-30deg) scaleY(.45)}50%{transform:skewY(30deg) scaleY(1)}}
+@keyframes ss-hourglass{0%,35%{transform:rotate(0)}65%,100%{transform:rotate(180deg)}}
+.ss-paused>span{animation-play-state:paused}
+@media(prefers-reduced-motion:reduce){.ss-spinner>span{animation:none!important}}

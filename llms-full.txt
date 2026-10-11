@@ -1,0 +1,91 @@
+# Stefan's Spinners — full documentation
+
+Package: stefans-spinners
+Version: 1.0.0
+Author: Stefan Mihajlovic
+License: MIT
+Website: https://spinners.stefanmihajlovic.com
+Source: https://github.com/Stefan-Mihajlovic/stefans-spinners
+
+## Install
+
+npm install stefans-spinners
+pnpm add stefans-spinners
+yarn add stefans-spinners
+bun add stefans-spinners
+
+Requires React >=18 for React components. The CSS can be used independently of React.
+ES modules, CommonJS, and TypeScript declarations are included.
+
+## React usage
+
+Import the stylesheet ONCE in your app entry point, root layout, or global stylesheet entry.
+
+```tsx
+import { Orbit } from 'stefans-spinners';
+import 'stefans-spinners/styles.css';
+
+export default function Loading() {
+  return <Orbit size={32} color="#b5a0ff" speed={1.2} label="Loading content" />;
+}
+```
+
+There is no default export. Every spinner is a named export. Components are stateless, do not use hooks, and support server rendering. In Next.js App Router, import the stylesheet in app/layout.tsx; a loading.tsx file may render a spinner directly.
+
+## Available named exports
+
+Circular: Orbit, Arc, Ring, Ripple, Breathe, Comet, Dual, Radar.
+Dots: Dots, Pulse, Chase, Bounce, Pendulum.
+Bars: Wave, Bars, Stack, Zigzag.
+Geometric: Grid, Flare, Flip, Bloom, Square, Hourglass, Spark.
+
+## Shared props
+
+- size: number. Diameter in pixels. Default 32. Nonpositive or nonfinite values fall back to 32.
+- color: string. Any CSS color. Default currentColor (inherits text color).
+- speed: number. Seconds per animation cycle. Default 1.2. Smaller values are faster. Nonpositive or nonfinite values fall back to 1.2.
+- label: string. Accessible label. Default Loading.
+- decorative: boolean. Default false. Set true when surrounding text already identifies the loading state. Removes the status role and label, and sets aria-hidden=true.
+- paused: boolean. Default false. Pauses the CSS animation.
+- className: string. Extra classes appended to the spinner classes.
+- style: React.CSSProperties. Inline styles; user styles take precedence.
+- Other standard span HTML attributes are forwarded, except children and color. Accessibility role, aria-label, and aria-hidden are controlled by label/decorative.
+
+## Accessibility
+
+By default the outer span has role="status" and aria-label="Loading". Animated child spans are aria-hidden. All animations stop under prefers-reduced-motion: reduce. Set aria-busy on the content being loaded. Avoid putting multiple announcing spinners in the same region. If nearby text says Loading, use decorative on the spinner.
+
+```tsx
+<button disabled>
+  <Dots size={20} decorative /> Saving…
+</button>
+```
+
+## CSS-only usage
+
+Import 'stefans-spinners/styles.css' with your bundler or copy dist/styles.css to your public assets and link it from HTML. Render a span with ss-spinner and the variant class. Use child spans with --ss-i starting at zero. All IDs are lowercase component names.
+
+```html
+<link rel="stylesheet" href="/styles.css">
+<span class="ss-spinner ss-dots" role="status" aria-label="Loading"
+  style="--ss-size:32px;--ss-color:#b5a0ff;--ss-speed:1.2s">
+  <span aria-hidden="true" style="--ss-i:0"></span>
+  <span aria-hidden="true" style="--ss-i:1"></span>
+  <span aria-hidden="true" style="--ss-i:2"></span>
+</span>
+```
+
+Child counts:
+Orbit 3; Arc 1; Ring 1; Dots 3; Wave 5; Pulse 1; Ripple 3; Bars 4; Grid 9; Breathe 2; Comet 1; Dual 2; Flare 8; Flip 1; Bloom 6; Chase 8; Bounce 3; Pendulum 3; Square 2; Stack 3; Zigzag 5; Hourglass 1; Radar 2; Spark 4.
+
+Add ss-paused to the outer span to pause. CSS custom properties: --ss-size, --ss-color, --ss-speed. All class names and keyframes use the ss- prefix. Ring uses color-mix; Comet uses mask and conic-gradient. Target current evergreen browsers.
+
+## Catalog
+
+import { spinners } from 'stefans-spinners/catalog';
+
+The catalog has no React dependency and returns entries with name, id, category, count, and description. SpinnerName and SpinnerVariant TypeScript types are exported from the catalog and main entry.
+
+## Troubleshooting
+
+If a spinner is invisible or static, first confirm the stylesheet is imported. Check whether reduced motion is enabled or paused is true. color="currentColor" needs a contrasting inherited text color. CSS animations intentionally do not indicate real progress percentages.
