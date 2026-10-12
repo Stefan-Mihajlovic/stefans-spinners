@@ -128,6 +128,12 @@ All geometry props are numbers. Dimensions are in pixels; `tilt`, `swing`, `swee
 
 Hourglass defaults to a 6 px waist and 8 px corner radius at size 48 (both scale proportionally with `size`); set it to `0` for sharp corners. Its rounded SVG mask is generated when props change, while rotation remains a CSS animation. Dual and Square have separate outer/inner widths; Breathe has first/second ring widths; Radar has a ring width and a sweep width. The legacy `strokeWidth` prop still sets both stroke widths unless a part-specific value overrides it.
 
+### Arc geometry
+
+`arcLength`, `outerArcLength`, and `innerArcLength` are measured in degrees. `borderRadius` rounds the ends of Arc, Ring, and Comet; Dual uses independent `outerBorderRadius` and `innerBorderRadius`. Radius is in pixels and visually stops at half the relevant stroke thickness (fully round). Vortex exposes all three stroke widths separately. Arc geometry uses a static SVG mask; motion still runs entirely in CSS. Set geometry through component props; CSS stroke variables alone do not recompute a mask.
+
+For CSS-only Infinity, `--ss-path` is a CSS `path()` value in pixels, with a default path sized for 32px. Use the React component to automatically rebuild it when changing size or loop width.
+
 ## Accessibility
 
 Spinners expose a labeled status and respect `prefers-reduced-motion`. Use `decorative` when adjacent text already describes the loading state, and set `aria-busy` on the region being loaded.
@@ -146,35 +152,6 @@ import { spinners } from 'stefans-spinners/catalog';
 
 The catalog is framework independent. Modern evergreen browsers are supported.
 
-## Development
-
-```sh
-npm ci
-npm test
-npm run typecheck
-npm run build:site
-npm run dev
-```
-
-Open http://127.0.0.1:4173. Netlify builds the package and the documentation using `netlify.toml`.
-
-## Release
-
-With an authorized npm account and 2FA configured:
-
-```sh
-npm login
-npm publish --access public
-```
-
-`prepublishOnly` builds, tests, and typechecks before publishing. Never commit credentials. Future releases should increment the package version before publication.
-
 ## License
 
 [MIT](./LICENSE) © 2026 [Stefan Mihajlovic](https://stefanmihajlovic.com).
-
-### Arc geometry
-
-`arcLength`, `outerArcLength`, and `innerArcLength` are measured in degrees. `borderRadius` rounds the ends of Arc, Ring, and Comet; Dual uses independent `outerBorderRadius` and `innerBorderRadius`. Radius is in pixels and visually stops at half the relevant stroke thickness (fully round). Vortex exposes all three stroke widths separately. Arc geometry uses a static SVG mask; motion still runs entirely in CSS. Set geometry through component props; CSS stroke variables alone do not recompute a mask.
-
-For CSS-only Infinity, `--ss-path` is a CSS `path()` value in pixels, with a default path sized for 32px. Use the React component to automatically rebuild it when changing size or loop width.

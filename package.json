@@ -1,6 +1,6 @@
 {
   "name": "stefans-spinners",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "60 beautifully simple, accessible CSS spinners for React and the web.",
   "type": "module",
   "main": "./dist/index.cjs",
