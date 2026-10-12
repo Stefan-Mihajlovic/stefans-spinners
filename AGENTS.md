@@ -2,7 +2,7 @@
 
 Stefan authorized npm publication and the live website update on 2026-10-12 (Europe/Belgrade).
 
-- Version 1.0.1 was submitted successfully with npm publish on 2026-10-12 at approximately 21:20 UTC. npm reported processing; the public registry currently shows its temporary 0.0.0-stage placeholder. Verify availability of 1.0.1 before reporting the package installable. Do not republish while processing. No staged approval is listed for the account.
+- Version 1.0.1 is published and tagged latest on npm. Verified a clean installation from the public registry on 2026-10-12 at approximately 21:25 UTC: all 60 exports are present and server imports render correctly. Do not republish 1.0.1; use a new version for the next release.
 - All 23 tests and typecheck pass. The package contains 60 spinners and automatic browser styles.
 - The former 24-hour npm name cooldown has expired. Version 1.0.0 must not be reused.
 - The npm link is active on the website and temporary release-wait messages have been removed.
