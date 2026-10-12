@@ -113,7 +113,7 @@ function header(title, subtitle, eyebrow) {
   return `<header class="intro"><h1>${eyebrow ? `<span>${eyebrow}</span> ${title}` : title}</h1><p>${subtitle}</p></header>`;
 }
 function home() {
-  return `${header("Spin spin, little star.<span>Good things are never far.</span>", "Loading spinners for React. A little spin, a little glow, and you’re ready to go.")}<div class="install" title="npm release available after October 12, 2026 at 19:37 UTC"><span>$</span><code>npm install <span class="package">stefans-spinners</span></code><button class="icon-button" data-copy="npm install stefans-spinners" aria-label="Copy to clipboard">${icons.copy}</button></div><div id="grid">${catalog.map((s) => `<a href="${url(s)}" data-route class="spinner-card" data-spinner="${s.id}" aria-label="${s.name}"><span class="card-preview">${markup(s)}</span><span class="card-label">${s.name}</span></a>`).join("")}</div>
+  return `${header("Spin spin, little star.<span>Good things are never far.</span>", "Loading spinners for React. A little spin, a little glow, and you’re ready to go.")}<div class="install"><span>$</span><code>npm install <span class="package">stefans-spinners</span></code><button class="icon-button" data-copy="npm install stefans-spinners" aria-label="Copy to clipboard">${icons.copy}</button></div><div id="grid">${catalog.map((s) => `<a href="${url(s)}" data-route class="spinner-card" data-spinner="${s.id}" aria-label="${s.name}"><span class="card-preview">${markup(s)}</span><span class="card-label">${s.name}</span></a>`).join("")}</div>
     <footer class="inspiration">
       <svg class="inspiration-star" viewBox="0 0 80 80" fill="currentColor" aria-hidden="true">
         <g class="inspiration-orbit"><circle cx="40" cy="8" r="1.5" opacity=".65"/><circle cx="40" cy="72" r="1" opacity=".35"/></g>
@@ -481,8 +481,6 @@ async function copy(text, button) {
     toast("Could not copy. Select and copy the text manually.");
   }
 }
-$("#npm-link").onclick = () =>
-  toast("npm release is coming soon — available after October 12 at 19:37 UTC.");
 function closeMenu() {
   const restoreFocus = $("#sidebar").contains(document.activeElement) && $("#sidebar").classList.contains("open");
   $("#sidebar").classList.remove("open");

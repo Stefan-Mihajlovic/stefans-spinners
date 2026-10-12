@@ -1,11 +1,12 @@
 # Development and release status
 
-Stefan authorized committing and pushing the current changes to GitHub on 2026-10-12 (Europe/Belgrade). Deployment and npm publication still require a new explicit request.
+Stefan authorized npm publication and the live website update on 2026-10-12 (Europe/Belgrade).
 
-- Package version 1.0.1 is prepared. Tests and typecheck pass.
-- npm version 1.0.0 was unpublished on 2026-10-11 at 19:37:32 UTC. npm rejected the 1.0.1 publication because the same package name cannot be republished for 24 hours. Retry after 2026-10-12 19:37:32 UTC; do not reuse 1.0.0.
-- After a successful npm publish, restore the npm link and remove the temporary release-wait messages from site/index.html and site/app.js, then rebuild and deploy the gallery.
-- Gallery is live; verified production deploy 6acc7d3e6049434eb8888a52 on 2026-10-12T06:25:04.043Z UTC. Production was deployed directly from site-dist.
+- Version 1.0.1 was submitted successfully with npm publish on 2026-10-12 at approximately 21:20 UTC. npm reported processing; the public registry currently shows its temporary 0.0.0-stage placeholder. Verify availability of 1.0.1 before reporting the package installable. Do not republish while processing. No staged approval is listed for the account.
+- All 23 tests and typecheck pass. The package contains 60 spinners and automatic browser styles.
+- The former 24-hour npm name cooldown has expired. Version 1.0.0 must not be reused.
+- The npm link is active on the website and temporary release-wait messages have been removed.
+- Gallery is live; verified production deploy 6acd4f49c243ac2b0b6220fa on 2026-10-12 at approximately 21:22 UTC. Deployed directly from site-dist.
 - Netlify project: stefans-spinners (72f0acf1-2737-4dcc-a2db-6f766977d4f5), domain https://spinners.stefanmihajlovic.com.
 - Local preview: npm run build:site, then npm run dev (http://127.0.0.1:4173).
 - Never commit credentials.
