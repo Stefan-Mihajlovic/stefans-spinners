@@ -45,7 +45,9 @@ Standard span attributes are forwarded. Children are internal. Use `label` and `
 
 ## Shape controls
 
-Each spinner exposes controls for its own geometry. The gallery updates the React example as you adjust them.
+Each spinner exposes controls for its own geometry. Double-click a gallery slider (or press Enter while it is focused) to type an exact value. Enter or blur applies it; Escape cancels. Speed entry uses milliseconds.
+
+The React example below the preview is editable: change literal props to update the spinner and controls live. The editor supports size, hex color, speed, easing, opacity, pause, and the selected spinner’s geometry. Invalid drafts keep the last valid preview; Reset restores the demo. The editor reads props without executing JavaScript.
 
 ```tsx
 <Arc size={48} strokeWidth={5} borderRadius={2.5} arcLength={220} />

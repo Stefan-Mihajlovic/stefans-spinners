@@ -1,3 +1,5 @@
+import { bindRangeInputs } from "./range-input.js";
+import { createCodeEditor, parseSpinnerCode } from "./code-editor.js";
 import { getDefaultEasing } from "../src/easing.ts";
 import { spinners } from "../src/catalog.ts";
 import { icons } from "./icons.js";
@@ -25,6 +27,7 @@ let state = { ...defaults },
   searchItems = [],
   toastTimer;
 let colorPicker = null;
+let codeEditor = null;
 let easingPicker = null;
 let renderedPath = null;
 const escape = (s) =>
@@ -146,6 +149,7 @@ function codeMarkup(text) {
     .join("");
 }
 function codeBlock(text, id = "") {
+  if (id === "live-code") return `<figure class="code-block code-editor" id="live-code"><button class="icon-button copy-code" aria-label="Copy code">${icons.copy}</button><textarea aria-label="Edit spinner code" aria-describedby="code-editor-status" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off">${escape(text)}</textarea><figcaption class="code-editor-status" id="code-editor-status" role="status">Edit props to update the preview.</figcaption></figure>`;
   return `<figure class="code-block" ${id ? `id="${id}"` : ""}><button class="icon-button copy-code" aria-label="Copy to clipboard">${icons.copy}</button><pre><code>${codeMarkup(text)}</code></pre></figure>`;
 }
 function imports(s) {
@@ -271,6 +275,8 @@ function updatePreview() {
   );
   $("#pause").setAttribute("aria-pressed", String(state.paused));
   colorPicker?.sync(state.color, state.opacity);
+  document.querySelectorAll("[name=size]").forEach(input => input.checked = Number(input.value) === state.size);
+  $("#speed").value = state.speed;
   $("#opacity").value = state.opacity;
   $("#speed-value").textContent = `${Math.round(state.speed * 1000)}ms`;
   $("#opacity-value").textContent = `${state.opacity}%`;
@@ -279,9 +285,22 @@ function updatePreview() {
     `${((state.speed - 0.2) / 2.8) * 100}%`,
   );
   $("#opacity").parentElement.style.setProperty("--fill", `${state.opacity}%`);
-  $("#live-code code").innerHTML = codeMarkup(liveCode());
+  codeEditor?.sync(liveCode());
 }
 function bindDetail() {
+  codeEditor = createCodeEditor({
+    element: $("#live-code"), source: liveCode(),
+    parse: code => parseSpinnerCode(code, selected.name, activeControls().map(c => c.key)),
+    onChange(values) {
+      const next = { ...defaults, ...values };
+      const resolved = resolveCustomization(selected.id, next.size, next.custom);
+      for (const [key, value] of Object.entries(next.custom)) {
+        if (Math.abs(resolved[key] - value) > 0.001) throw Error(`${key} is outside the range for size ${next.size}.`);
+      }
+      state = next;
+      updatePreview();
+    },
+  });
   colorPicker = createColorPicker({
     color: state.color,
     opacity: state.opacity,
@@ -312,6 +331,16 @@ function bindDetail() {
       state[key] = Number(e.target.value);
       updatePreview();
     };
+  bindRangeInputs($(".controls"), {
+    getValue: input => input.dataset.custom
+      ? resolveCustomization(selected.id, state.size, state.custom)[input.dataset.custom]
+      : state[input.id],
+    onCommit(input, value) {
+      if (input.dataset.custom) state.custom[input.dataset.custom] = value;
+      else state[input.id] = value;
+      updatePreview();
+    },
+  });
   easingPicker = createEasingPicker({
     value: state.easing ?? getDefaultEasing(selected.id),
     onChange(value) {
@@ -356,6 +385,7 @@ function bindDetail() {
 function route() {
   renderedPath = location.pathname;
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
+  codeEditor = null;
   easingPicker?.destroy();
   easingPicker = null;
   colorPicker?.destroy();
@@ -398,6 +428,7 @@ window.addEventListener("popstate", () => {
   if (location.pathname !== renderedPath) route();
 });
 function readCode(figure) {
+  if (figure.id === "live-code") return codeEditor.read();
   return [...figure.querySelectorAll(".code-line")]
     .map((line) => line.textContent)
     .join("\n");

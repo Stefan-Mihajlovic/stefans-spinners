@@ -1471,3 +1471,24 @@ nav[aria-label="Main"] a[aria-current="page"] { color: #e8e8e8; background: #fff
 @media (prefers-reduced-motion: reduce) {
   .easing-popover, .easing-trigger > svg { transition: none; }
 }
+
+.control-row.range.is-editing { background: #202020; }
+.control-row.range.is-editing > :not(.range-value-input) { visibility: hidden; }
+.range-value-input {
+  position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3;
+  padding: 0 10px; border: 1px solid #777; border-radius: inherit;
+  background: #202020; color: var(--text); font: 13px ui-monospace, monospace;
+  outline: none; box-shadow: none;
+}
+.range-value-input::-webkit-inner-spin-button { appearance: none; }
+.code-editor textarea {
+  display: block; width: 100%; min-height: 120px; max-height: 340px;
+  padding: 4px 0; resize: vertical; border: 0; border-radius: 0; outline: none;
+  background: transparent; color: #c8c8c8; caret-color: #fff;
+  font: 13px/20px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  tab-size: 2; white-space: pre; overflow: auto;
+}
+.code-editor:focus-within { box-shadow: inset 0 0 0 1px #444; }
+.code-editor textarea:focus-visible { box-shadow: none; }
+.code-editor-status { margin-top: 10px; color: #888; font-size: 11px; line-height: 1.5; }
+.code-editor:has([aria-invalid="true"]) .code-editor-status { color: #e5ab9f; }
