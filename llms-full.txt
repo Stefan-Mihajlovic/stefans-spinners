@@ -1,7 +1,7 @@
 # Stefan's Spinners — full documentation
 
 Package: stefans-spinners
-Version: 1.0.0
+Version: 1.0.1
 Author: Stefan Mihajlovic
 License: MIT
 Website: https://spinners.stefanmihajlovic.com
@@ -19,25 +19,24 @@ ES modules, CommonJS, and TypeScript declarations are included.
 
 ## React usage
 
-Import the stylesheet ONCE in your app entry point, root layout, or global stylesheet entry.
+Import the component. The package automatically installs its bundled stylesheet once per browser document; no separate CSS import is needed for browser usage.
 
 ```tsx
 import { Orbit } from 'stefans-spinners';
-import 'stefans-spinners/styles.css';
 
 export default function Loading() {
   return <Orbit size={32} color="#b5a0ff" speed={1.2} label="Loading content" />;
 }
 ```
 
-There is no default export. Every spinner is a named export. Components are stateless, do not use hooks, and support server rendering. In Next.js App Router, import the stylesheet in app/layout.tsx; a loading.tsx file may render a spinner directly.
+There is no default export. Every spinner is a named export. Components are stateless, do not use hooks, and support server rendering without accessing browser globals. Automatic styles are installed when the package loads in the browser. For styled server HTML before JavaScript loads, React Server Components with no browser import, or a Content Security Policy that blocks inline stylesheets, import "stefans-spinners/styles.css" once in the app root (for example app/layout.tsx in Next.js). The CSS export remains available for existing integrations.
 
 ## Available named exports
 
-Circular: Orbit, Arc, Ring, Ripple, Breathe, Comet, Dual, Radar, Satellite, Eclipse, Vortex, Gyro, Clock.
-Dots: Dots, Pulse, Chase, Bounce, Pendulum, Helix, Binary, Beads, Infinity, Newton, Shuttle, Typing.
-Bars: Wave, Bars, Stack, Zigzag, Domino.
-Geometric: Grid, Flare, Flip, Bloom, Square, Hourglass, Spark, Star, Twinkle, Pinwheel, Asterisk, Constellation, Steps, Tetris, Checker, Diamond, Prism, Fan, Flower, Crosshair.
+Circular: Orbit, Arc, Ring, Ripple, Breathe, Comet, Dual, Radar, Satellite, Eclipse, Vortex, Gyro, Clock, Compass, Gauge, Slinky.
+Dots: Dots, Pulse, Chase, Bounce, Pendulum, Helix, Binary, Beads, Infinity, Newton, Shuttle, Typing, Fountain, Rain.
+Bars: Wave, Bars, Stack, Zigzag, Domino, Meteor.
+Geometric: Grid, Flare, Flip, Bloom, Square, Hourglass, Spark, Star, Twinkle, Pinwheel, Asterisk, Constellation, Steps, Tetris, Checker, Diamond, Prism, Fan, Flower, Crosshair, Pacman, Conveyor, Firework, Book.
 
 ## Shared props
 
@@ -117,6 +116,18 @@ Each spinner exposes controls for its own geometry. The gallery updates the Reac
 | Flower | `petalWidth`, `petalLength`, `borderRadius` |
 | Clock | `outerStrokeWidth`, `innerStrokeWidth`, `trackStrokeWidth`, `petalLength`, `travelDistance`, `borderRadius` |
 | Crosshair | `strokeWidth`, `petalLength`, `borderRadius` |
+| Rain | `dotSize`, `strokeWidth` |
+| Compass | `strokeWidth`, `petalWidth`, `swing` |
+| Meteor | `strokeWidth`, `petalLength`, `borderRadius` |
+| Pacman | `dotSize`, `sweepAngle` |
+| Conveyor | `dotSize`, `borderRadius` |
+| Fountain | `dotSize`, `bounceHeight` |
+| Gauge | `strokeWidth`, `petalLength`, `swing` |
+| Slinky | `strokeWidth`, `gap` |
+| Firework | `barWidth`, `petalLength`, `borderRadius` |
+| Book | `strokeWidth`, `borderRadius` |
+
+Clock has twelve fixed hour marks and two hands sharing a central pivot. `speed` controls one minute-hand revolution; the hour hand takes twelve times as long.
 
 All geometry props are numbers. Dimensions are in pixels; `tilt`, `swing`, `sweepAngle`, `arcLength`, `outerArcLength`, and `innerArcLength` use degrees. `trackOpacity`, `pulseScale`, and `innerRadius` use fractions from 0 to 1. For Star and Twinkle, `innerRadius` is the inner-to-outer radius ratio. Helix `travelDistance` is the horizontal displacement from its center in pixels; Pinwheel uses `petalWidth` and `petalLength` for its blades. Omitted geometry values use the spinner’s defaults; most scale with `size`. Explicit pixel values keep their size and are clamped to the supported range. Nonfinite values use the default. Unsupported geometry props are ignored. `customizationControls` exports the supported props, units, defaults, and ranges for each spinner; `relative: true` means the metadata’s default/min/max are multiplied by `size`.
 
@@ -180,7 +191,7 @@ The catalog has no React dependency and returns entries with name, id, category,
 
 ## Troubleshooting
 
-If a spinner is invisible or static, first confirm the stylesheet is imported. Check whether reduced motion is enabled or paused is true. color="currentColor" needs a contrasting inherited text color. CSS animations intentionally do not indicate real progress percentages.
+If a spinner is invisible or static, confirm the browser loaded the component bundle and its automatic stylesheet. For server-only rendering or a CSP blocking inline stylesheets, load stefans-spinners/styles.css explicitly. Check whether reduced motion is enabled or paused is true. color="currentColor" needs a contrasting inherited text color. CSS animations intentionally do not indicate real progress percentages.
 
 ### Arc geometry
 

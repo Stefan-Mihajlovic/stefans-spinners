@@ -48,8 +48,18 @@ export const spinners = [
   { name: 'Prism', id: 'prism', category: 'Geometric', count: 1, description: "A triangle turns to catch the light. Three sides, and every one is its good side tonight." },
   { name: 'Fan', id: 'fan', category: 'Geometric', count: 4, description: "Four blades spin, a breeze rolls through. Keeping your cool while the bytes queue." },
   { name: 'Flower', id: 'flower', category: 'Geometric', count: 8, description: "Eight petals on display. A garden that blooms through the delay." },
-  { name: 'Clock', id: 'clock', category: 'Circular', count: 2, description: "Tick meets tock, round goes the clock. Time flies in this tiny block." },
+  { name: 'Clock', id: 'clock', category: 'Circular', count: 14, description: "Tick meets tock, round goes the clock. Time flies in this tiny block." },
   { name: 'Crosshair', id: 'crosshair', category: 'Geometric', count: 4, description: "Four corners in sight, lining up just right." },
+  { name: 'Rain', id: 'rain', category: 'Dots', count: 3, description: "A little rain, a windowpane. These drops make waiting feel less plain." },
+  { name: 'Compass', id: 'compass', category: 'Circular', count: 1, description: "North or south, take the scenic route. This tiny needle will figure it out." },
+  { name: 'Meteor', id: 'meteor', category: 'Bars', count: 3, description: "A streak of light, a speedy flight. Making a wish while the bytes unite." },
+  { name: 'Pacman', id: 'pacman', category: 'Geometric', count: 4, description: "A little snack along the track. Gobble the wait, then circle back." },
+  { name: 'Conveyor', id: 'conveyor', category: 'Geometric', count: 3, description: "Round the bend, parcels to send. This tiny shift has yet to end." },
+  { name: 'Fountain', id: 'fountain', category: 'Dots', count: 5, description: "Up they fly, a splash of sky. No wet pixels as the dots go by." },
+  { name: 'Gauge', id: 'gauge', category: 'Circular', count: 1, description: "A little swing, a speedy thing. This dashboard has some zip to bring." },
+  { name: 'Slinky', id: 'slinky', category: 'Circular', count: 5, description: "Down the stair, up in the air. A little spring without a care." },
+  { name: 'Firework', id: 'firework', category: 'Geometric', count: 8, description: "A little boom, a little bloom. A silent party in your loading room." },
+  { name: 'Book', id: 'book', category: 'Geometric', count: 3, description: "Turn a page, set the stage. A tiny tale for the loading age." },
 ] as const;
 export type SpinnerName = typeof spinners[number]['name'];
 export type SpinnerVariant = typeof spinners[number]['id'];

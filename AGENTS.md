@@ -1,6 +1,6 @@
 # Development and release status
 
-Stefan explicitly authorized publishing this project again on 2026-10-12 (Europe/Belgrade).
+Stefan authorized committing and pushing the current changes to GitHub on 2026-10-12 (Europe/Belgrade). Deployment and npm publication still require a new explicit request.
 
 - Package version 1.0.1 is prepared. Tests and typecheck pass.
 - npm version 1.0.0 was unpublished on 2026-10-11 at 19:37:32 UTC. npm rejected the 1.0.1 publication because the same package name cannot be republished for 24 hours. Retry after 2026-10-12 19:37:32 UTC; do not reuse 1.0.0.

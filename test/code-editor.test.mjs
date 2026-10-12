@@ -2,7 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { parseSpinnerCode } from '../site/code-editor.js';
 const demo = props => `import { Checker } from "stefans-spinners";
-import "stefans-spinners/styles.css";
 export function CheckerDemo() { return <Checker ${props} />; }`;
 test('code editor reads geometry, color, timing, opacity and pause atomically', () => {
   assert.deepEqual(parseSpinnerCode(demo('size={72} color="#abc" gap={8} speed={0.5} easing="ease-out" style={{ opacity: 0.35 }} paused'), 'Checker', ['gap']), {
@@ -18,4 +17,9 @@ test('code editor rejects expressions, unknown props, duplicate props and malfor
 });
 test('removing props restores defaults in the caller without retaining old custom values', () => {
   assert.deepEqual(parseSpinnerCode(demo('size={48}'),'Checker',['gap']), {size:48,custom:{}});
+});
+
+test('code editor still accepts the optional legacy stylesheet import', () => {
+  const source = demo('size={48}').replace('export function', 'import "stefans-spinners/styles.css";\nexport function');
+  assert.deepEqual(parseSpinnerCode(source, 'Checker', ['gap']), {size:48,custom:{}});
 });

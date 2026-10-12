@@ -2,7 +2,7 @@ import { normalizeHex } from './color-utils.js';
 
 // This editor reads literal spinner props, never evaluates JavaScript.
 export function parseSpinnerCode(source, name, controls) {
-  const shape = new RegExp(`^\\s*import\\s*\\{\\s*${name}\\s*\\}\\s*from\\s*["']stefans-spinners["'];?\\s*import\\s*["']stefans-spinners/styles\\.css["'];?\\s*export\\s+function\\s+\\w+\\s*\\(\\s*\\)\\s*\\{\\s*return\\s*<${name}\\b([\\s\\S]*?)\\/\\s*>;?\\s*\\}\\s*$`);
+  const shape = new RegExp(`^\\s*import\\s*\\{\\s*${name}\\s*\\}\\s*from\\s*["']stefans-spinners["'];?\\s*(?:import\\s*["']stefans-spinners/styles\\.css["'];?\\s*)?export\\s+function\\s+\\w+\\s*\\(\\s*\\)\\s*\\{\\s*return\\s*<${name}\\b([\\s\\S]*?)\\/\\s*>;?\\s*\\}\\s*$`);
   const match = shape.exec(source);
   if (!match) throw Error(`Keep the ${name} demo structure and edit its props below.`);
   const result = { custom: {} };
@@ -62,18 +62,19 @@ export function parseSpinnerCode(source, name, controls) {
   return result;
 }
 
-export function createCodeEditor({ element, source, parse, onChange }) {
+export function createCodeEditor({ element, source, render, parse, onChange }) {
   const input = element.querySelector('textarea');
   const status = element.querySelector('.code-editor-status');
+  const highlight = element.querySelector('.code-editor-highlight');
   let applying = false;
-  function resize() { input.rows = Math.max(6, Math.min(16, input.value.split('\n').length)); }
+  function resize() { highlight.innerHTML = render(input.value); }
   function validate() {
     try {
       const values = parse(input.value);
       applying = true;
       onChange(values);
       input.removeAttribute('aria-invalid');
-      status.textContent = 'Edit props to update the preview.';
+      status.textContent = '';
     } catch (error) {
       input.setAttribute('aria-invalid', 'true');
       status.textContent = error.message;
@@ -88,7 +89,7 @@ export function createCodeEditor({ element, source, parse, onChange }) {
       if (applying) return;
       input.value = code;
       input.removeAttribute('aria-invalid');
-      status.textContent = 'Edit props to update the preview.';
+      status.textContent = '';
       resize();
     },
     read: () => input.value,

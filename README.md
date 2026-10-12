@@ -2,7 +2,7 @@
 
 **Spin spin, little star. Good things are never far.**
 
-50 accessible CSS loading indicators for React and the web. Customize color, size, speed, and each spinner’s shape. No animation runtime. MIT licensed.
+60 accessible CSS loading indicators for React and the web. Customize color, size, speed, and each spinner’s shape. No animation runtime. MIT licensed.
 
 [Explore the gallery](https://spinners.stefanmihajlovic.com) · [AI documentation](https://spinners.stefanmihajlovic.com/llms.txt)
 
@@ -14,18 +14,19 @@ npm install stefans-spinners
 
 ```tsx
 import { Orbit } from 'stefans-spinners';
-import 'stefans-spinners/styles.css';
 
 export default function Loading() {
   return <Orbit size={32} color="#b5a0ff" speed={1.2} label="Loading content" />;
 }
 ```
 
-Import the stylesheet once at your app root. Requires React 18+. Includes ESM, CommonJS, and TypeScript declarations. Components support server rendering.
+Styles load automatically with the component import, once per browser document. Requires React 18+. Includes ESM, CommonJS, and TypeScript declarations.
+
+Server rendering is supported without browser globals. To style the initial server HTML before JavaScript loads (or when inline stylesheets are blocked by your Content Security Policy), optionally import `stefans-spinners/styles.css` once in your app root. This is also needed for React Server Components that never import the package in the browser.
 
 ## Spinners
 
-Orbit · Arc · Ring · Dots · Wave · Pulse · Ripple · Bars · Grid · Breathe · Comet · Dual · Flare · Flip · Bloom · Chase · Bounce · Pendulum · Square · Stack · Zigzag · Hourglass · Radar · Spark · Star · Twinkle · Satellite · Eclipse · Helix · Pinwheel · Asterisk · Binary · Beads · Constellation · Vortex · Gyro · Infinity · Newton · Shuttle · Typing · Domino · Steps · Tetris · Checker · Diamond · Prism · Fan · Flower · Clock · Crosshair
+Orbit · Arc · Ring · Dots · Wave · Pulse · Ripple · Bars · Grid · Breathe · Comet · Dual · Flare · Flip · Bloom · Chase · Bounce · Pendulum · Square · Stack · Zigzag · Hourglass · Radar · Spark · Star · Twinkle · Satellite · Eclipse · Helix · Pinwheel · Asterisk · Binary · Beads · Constellation · Vortex · Gyro · Infinity · Newton · Shuttle · Typing · Domino · Steps · Tetris · Checker · Diamond · Prism · Fan · Flower · Clock · Crosshair · Rain · Compass · Meteor · Pacman · Conveyor · Fountain · Gauge · Slinky · Firework · Book
 
 ## Props
 
@@ -110,6 +111,18 @@ The React example below the preview is editable: change literal props to update 
 | Flower | `petalWidth`, `petalLength`, `borderRadius` |
 | Clock | `outerStrokeWidth`, `innerStrokeWidth`, `trackStrokeWidth`, `petalLength`, `travelDistance`, `borderRadius` |
 | Crosshair | `strokeWidth`, `petalLength`, `borderRadius` |
+| Rain | `dotSize`, `strokeWidth` |
+| Compass | `strokeWidth`, `petalWidth`, `swing` |
+| Meteor | `strokeWidth`, `petalLength`, `borderRadius` |
+| Pacman | `dotSize`, `sweepAngle` |
+| Conveyor | `dotSize`, `borderRadius` |
+| Fountain | `dotSize`, `bounceHeight` |
+| Gauge | `strokeWidth`, `petalLength`, `swing` |
+| Slinky | `strokeWidth`, `gap` |
+| Firework | `barWidth`, `petalLength`, `borderRadius` |
+| Book | `strokeWidth`, `borderRadius` |
+
+Clock has twelve fixed hour marks and two hands sharing a central pivot. `speed` controls one minute-hand revolution; the hour hand takes twelve times as long.
 
 All geometry props are numbers. Dimensions are in pixels; `tilt`, `swing`, `sweepAngle`, `arcLength`, `outerArcLength`, and `innerArcLength` use degrees. `trackOpacity`, `pulseScale`, and `innerRadius` use fractions from 0 to 1. For Star and Twinkle, `innerRadius` is the inner-to-outer radius ratio. Helix `travelDistance` is the horizontal displacement from its center in pixels; Pinwheel uses `petalWidth` and `petalLength` for its blades. Omitted geometry values use the spinner’s defaults; most scale with `size`. Explicit pixel values keep their size and are clamped to the supported range. Nonfinite values use the default. Unsupported geometry props are ignored. `customizationControls` exports the supported props, units, defaults, and ranges for each spinner; `relative: true` means the metadata’s default/min/max are multiplied by `size`.
 

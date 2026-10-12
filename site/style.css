@@ -609,16 +609,16 @@ body.detail #page-shell {
   user-select: none;
 }
 .syntax-string {
-  color: #b6c8d1;
+  color: #91c9df;
 }
 .syntax-keyword {
-  color: #b2b2b2;
+  color: #c4a1e8;
 }
 .syntax-component {
-  color: #d5d5d5;
+  color: #e5c18e;
 }
 .syntax-number {
-  color: #a4bca7;
+  color: #9bd0aa;
 }
 .docs-section {
   margin-top: 60px;
@@ -1481,14 +1481,31 @@ nav[aria-label="Main"] a[aria-current="page"] { color: #e8e8e8; background: #fff
   outline: none; box-shadow: none;
 }
 .range-value-input::-webkit-inner-spin-button { appearance: none; }
-.code-editor textarea {
-  display: block; width: 100%; min-height: 120px; max-height: 340px;
-  padding: 4px 0; resize: vertical; border: 0; border-radius: 0; outline: none;
-  background: transparent; color: #c8c8c8; caret-color: #fff;
+/* The highlighted mirror supplies line numbers and intrinsic height; the
+   transparent textarea retains native selection, caret and undo behavior. */
+.code-editor-scroll { overflow-x: auto; }
+.code-editor-content {
+  --editor-gutter: 32px;
+  position: relative; width: max-content; min-width: 100%;
   font: 13px/20px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  tab-size: 2; white-space: pre; overflow: auto;
 }
+.code-editor-content pre { overflow: visible; padding-right: 16px; font: inherit; pointer-events: none; }
+.code-editor .code-line { position: relative; padding-left: var(--editor-gutter); }
+.code-editor .code-line::before { position: absolute; left: 0; width: var(--editor-gutter); }
+.code-editor textarea {
+  position: absolute; top: 0; left: var(--editor-gutter);
+  display: block; width: calc(100% - var(--editor-gutter)); height: 100%;
+  min-height: 0; margin: 0; padding: 0 16px 0 0;
+  resize: none; border: 0; border-radius: 0; outline: none;
+  background: transparent; color: transparent; -webkit-text-fill-color: transparent; caret-color: #dedede;
+  font: inherit; letter-spacing: inherit;
+  tab-size: 2; white-space: pre; overflow: hidden;
+}
+.code-editor textarea::selection { background: #b6c8d138; }
 .code-editor:focus-within { box-shadow: inset 0 0 0 1px #444; }
 .code-editor textarea:focus-visible { box-shadow: none; }
-.code-editor-status { margin-top: 10px; color: #888; font-size: 11px; line-height: 1.5; }
-.code-editor:has([aria-invalid="true"]) .code-editor-status { color: #e5ab9f; }
+.code-editor-status { margin-top: 10px; color: #e5ab9f; font-size: 11px; line-height: 1.5; }
+.code-editor-status:empty { display: none; }
+@media (max-width: 700px) {
+  .code-editor-content { --editor-gutter: 24px; font-size: 12px; }
+}

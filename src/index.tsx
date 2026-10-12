@@ -1,3 +1,4 @@
+import "./auto-styles";
 import {
   createElement,
   type CSSProperties,
@@ -183,5 +184,15 @@ export const Diamond = createSpinner("diamond", 1);
 export const Prism = createSpinner("prism", 1);
 export const Fan = createSpinner("fan", 4);
 export const Flower = createSpinner("flower", 8);
-export const Clock = createSpinner("clock", 2);
+export const Clock = createSpinner("clock", 14);
 export const Crosshair = createSpinner("crosshair", 4);
+export const Rain = createSpinner("rain", 3);
+export const Compass = createSpinner("compass", 1);
+export const Meteor = createSpinner("meteor", 3);
+export const Pacman = createSpinner("pacman", 4);
+export const Conveyor = createSpinner("conveyor", 3);
+export const Fountain = createSpinner("fountain", 5);
+export const Gauge = createSpinner("gauge", 1);
+export const Slinky = createSpinner("slinky", 5);
+export const Firework = createSpinner("firework", 8);
+export const Book = createSpinner("book", 3);

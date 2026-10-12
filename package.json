@@ -1,7 +1,7 @@
 {
   "name": "stefans-spinners",
   "version": "1.0.1",
-  "description": "50 beautifully simple, accessible CSS spinners for React and the web.",
+  "description": "60 beautifully simple, accessible CSS spinners for React and the web.",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -26,7 +26,10 @@
     "llms-full.txt"
   ],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "./dist/index.js",
+    "./dist/index.cjs",
+    "./src/auto-styles.ts"
   ],
   "scripts": {
     "build": "node scripts/build.mjs",

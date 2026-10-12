@@ -128,7 +128,7 @@ test('Ring track width is independent and new components keep stable defaults',(
   assert.equal(style['--ss-stroke-width'],'5px');
   assert.equal(style['--ss-track-stroke-width'],'1px');
   const ids=new Set(library.spinners.map(s=>s.id));
-  assert.equal(ids.size,50);
+  assert.equal(ids.size,60);
   for(const spinner of library.spinners.slice(30)){
     for(const size of [16,48,72]){
       const html=render(library[spinner.name],{size,paused:true,decorative:true});

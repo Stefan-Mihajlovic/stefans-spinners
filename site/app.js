@@ -149,11 +149,11 @@ function codeMarkup(text) {
     .join("");
 }
 function codeBlock(text, id = "") {
-  if (id === "live-code") return `<figure class="code-block code-editor" id="live-code"><button class="icon-button copy-code" aria-label="Copy code">${icons.copy}</button><textarea aria-label="Edit spinner code" aria-describedby="code-editor-status" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off">${escape(text)}</textarea><figcaption class="code-editor-status" id="code-editor-status" role="status">Edit props to update the preview.</figcaption></figure>`;
+  if (id === "live-code") return `<figure class="code-block code-editor" id="live-code"><button class="icon-button copy-code" aria-label="Copy code">${icons.copy}</button><div class="code-editor-scroll"><div class="code-editor-content"><pre aria-hidden="true"><code class="code-editor-highlight">${codeMarkup(text)}</code></pre><textarea aria-label="Edit spinner code" aria-describedby="code-editor-status" spellcheck="false" autocapitalize="off" autocomplete="off" wrap="off">${escape(text)}</textarea></div></div><figcaption class="code-editor-status" id="code-editor-status" role="status"></figcaption></figure>`;
   return `<figure class="code-block" ${id ? `id="${id}"` : ""}><button class="icon-button copy-code" aria-label="Copy to clipboard">${icons.copy}</button><pre><code>${codeMarkup(text)}</code></pre></figure>`;
 }
 function imports(s) {
-  return `import { ${s.name} } from "stefans-spinners";\nimport "stefans-spinners/styles.css";`;
+  return `import { ${s.name} } from "stefans-spinners";`;
 }
 function example(s, props, suffix = "Demo") {
   return `${imports(s)}\n\nexport function ${s.name}${suffix}() {\n  return <${s.name} ${props} />;\n}`;
@@ -289,7 +289,7 @@ function updatePreview() {
 }
 function bindDetail() {
   codeEditor = createCodeEditor({
-    element: $("#live-code"), source: liveCode(),
+    element: $("#live-code"), source: liveCode(), render: codeMarkup,
     parse: code => parseSpinnerCode(code, selected.name, activeControls().map(c => c.key)),
     onChange(values) {
       const next = { ...defaults, ...values };
