@@ -1,4 +1,5 @@
 import { bindRangeInputs } from "./range-input.js";
+import { createScrollStars } from "./scroll-stars.js";
 import { createCodeEditor, parseSpinnerCode } from "./code-editor.js";
 import { getDefaultEasing } from "../src/easing.ts";
 import { spinners } from "../src/catalog.ts";
@@ -30,6 +31,13 @@ let colorPicker = null;
 let codeEditor = null;
 let easingPicker = null;
 let renderedPath = null;
+let destroyPageTimeline = null;
+let previewTheme = "dark";
+const scrollStars = createScrollStars(document.querySelector(".starfield"));
+function previewColor() {
+  return state.color.toLowerCase() === defaults.color && previewTheme === "light"
+    ? "#282828" : state.color;
+}
 const escape = (s) =>
   String(s)
     .replaceAll("&", "&amp;")
@@ -39,12 +47,14 @@ const escape = (s) =>
 const stroke = (path) =>
   `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
 icons.pause = stroke('<path d="M6 3v10M10 3v10"/>');
-icons.play = stroke('<path d="m5 3 8 5-8 5z"/>');
+icons.play = stroke('<path d="M5 4.3Q5 3.25 5.9 3.8L12 7.2Q13.3 8 12 8.8L5.9 12.2Q5 12.75 5 11.7Z"/>');
 icons.chevron = stroke('<path d="m6 4 4 4-4 4"/>');
 icons.reset = stroke('<path d="M3 6a5 5 0 1 1 0 5M3 2v4h4"/>');
 icons.menu = stroke('<path d="M3 5h10M3 8h10M3 11h10"/>');
 icons.close = stroke('<path d="m4 4 8 8M12 4l-8 8"/>');
 icons.check = stroke('<path d="m3 8 3 3 7-7"/>');
+icons.sun = stroke('<circle cx="8" cy="8" r="3"/><path d="M8 1v1M8 14v1M1 8h1M14 8h1M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1"/>');
+icons.moon = stroke('<path d="M13.5 9.5A6 6 0 0 1 6.5 2.5 6 6 0 1 0 13.5 9.5Z"/>');
 function hydrateIcons(root = document) {
   root
     .querySelectorAll("[data-icon]")
@@ -81,6 +91,7 @@ logoMotion.addEventListener("change", () => {
 });
 $("#star-motion").onclick = () => {
   const paused = document.body.classList.toggle("stars-paused");
+  scrollStars.setPaused(paused);
   $("#star-motion").setAttribute("aria-pressed", String(paused));
   $("#star-motion").setAttribute("aria-label", paused ? "Play star background" : "Pause star background");
   $("#star-motion span").textContent = paused ? "Play stars" : "Pause stars";
@@ -195,7 +206,7 @@ function customizationDocs(spinner) {
 }
 function liveCode() {
   const props = [`size={${state.size}}`];
-  if (state.color !== defaults.color) props.push(`color="${state.color}"`);
+  if (previewColor() !== defaults.color) props.push(`color="${previewColor()}"`);
   if (state.speed !== defaults.speed) props.push(`speed={${state.speed}}`);
   if (state.easing) props.push(`easing="${state.easing}"`);
   if (state.opacity !== 100)
@@ -222,7 +233,7 @@ function docsSection(id, title, description, code, preview = "") {
 }
 function detail(s) {
   const n = catalog.indexOf(s);
-  return `${header(s.name, s.description, "Component /")}<section class="playground" id="preview" aria-label="Interactive preview"><div class="preview-stage"><div class="stage-canvas"><div id="detail-preview">${markup(s, state)}</div><button id="pause" class="icon-button" aria-label="Pause animation" aria-pressed="false">${icons.pause}</button><button id="customize-toggle" class="icon-button" aria-label="Hide customization" aria-expanded="true">${icons.chevron}</button></div><div class="controls"><div class="segmented" role="radiogroup" aria-label="Size">${[
+  return `${header(s.name, s.description, "Component /")}<section class="playground" id="preview" aria-label="Interactive preview"><div class="preview-stage"><div class="stage-canvas" data-theme="${previewTheme}"><div class="preview-theme" role="group" aria-label="Preview background"><button type="button" data-preview-theme="dark" aria-label="Dark preview background" title="Dark background" aria-pressed="${previewTheme === 'dark'}">${icons.moon}</button><button type="button" data-preview-theme="light" aria-label="Light preview background" title="Light background" aria-pressed="${previewTheme === 'light'}">${icons.sun}</button></div><div id="detail-preview">${markup(s, state)}</div><button id="pause" class="icon-button" aria-label="Pause animation" aria-pressed="false"><span class="pause-glyph" aria-hidden="true">${icons.pause}</span><span class="play-glyph" aria-hidden="true">${icons.play}</span></button><button id="customize-toggle" class="icon-button" aria-label="Hide customization" aria-expanded="true">${icons.chevron}</button></div><div class="controls"><div class="segmented" role="radiogroup" aria-label="Size">${[
     [24, "Small"],
     [48, "Medium"],
     [72, "Large"],
@@ -261,20 +272,19 @@ function updatePreview() {
   ))
     spinner.style.setProperty(key, value);
   spinner.style.setProperty("--ss-size", `${state.size}px`);
-  spinner.style.setProperty("--ss-color", state.color);
+  spinner.style.setProperty("--ss-color", previewColor());
   spinner.style.setProperty("--ss-speed", `${state.speed}s`);
   if (state.easing) spinner.style.setProperty("--ss-easing", state.easing);
   else spinner.style.removeProperty("--ss-easing");
   easingPicker?.sync(state.easing ?? getDefaultEasing(selected.id));
   spinner.style.opacity = state.opacity / 100;
   spinner.classList.toggle("ss-paused", state.paused);
-  $("#pause").innerHTML = icons[state.paused ? "play" : "pause"];
   $("#pause").setAttribute(
     "aria-label",
     state.paused ? "Play animation" : "Pause animation",
   );
   $("#pause").setAttribute("aria-pressed", String(state.paused));
-  colorPicker?.sync(state.color, state.opacity);
+  colorPicker?.sync(previewColor(), state.opacity);
   document.querySelectorAll("[name=size]").forEach(input => input.checked = Number(input.value) === state.size);
   $("#speed").value = state.speed;
   $("#opacity").value = state.opacity;
@@ -288,11 +298,22 @@ function updatePreview() {
   codeEditor?.sync(liveCode());
 }
 function bindDetail() {
+  document.querySelectorAll("[data-preview-theme]").forEach((button) => {
+    button.onclick = () => {
+      previewTheme = button.dataset.previewTheme;
+      $(".stage-canvas").dataset.theme = previewTheme;
+      document.querySelectorAll("[data-preview-theme]").forEach((option) => {
+        option.setAttribute("aria-pressed", String(option.dataset.previewTheme === previewTheme));
+      });
+      updatePreview();
+    };
+  });
   codeEditor = createCodeEditor({
     element: $("#live-code"), source: liveCode(), render: codeMarkup,
     parse: code => parseSpinnerCode(code, selected.name, activeControls().map(c => c.key)),
     onChange(values) {
       const next = { ...defaults, ...values };
+      if (values.color?.toLowerCase() === previewColor().toLowerCase()) next.color = state.color;
       const resolved = resolveCustomization(selected.id, next.size, next.custom);
       for (const [key, value] of Object.entries(next.custom)) {
         if (Math.abs(resolved[key] - value) > 0.001) throw Error(`${key} is outside the range for size ${next.size}.`);
@@ -302,9 +323,10 @@ function bindDetail() {
     },
   });
   colorPicker = createColorPicker({
-    color: state.color,
+    color: previewColor(),
     opacity: state.opacity,
     onChange: (values) => {
+      if (values.color?.toLowerCase() === previewColor().toLowerCase()) values = { ...values, color: state.color };
       Object.assign(state, values);
       updatePreview();
     },
@@ -382,7 +404,75 @@ function bindDetail() {
     );
   updatePreview();
 }
+function bindPageTimeline() {
+  const nav = document.querySelector(".page-timeline");
+  const links = [...nav.querySelectorAll("a")];
+  // Scope headings to sections: some playground controls share their IDs.
+  const targets = links.map((a) => document.querySelector(
+    a.hash === "#preview" ? ".playground" : `.docs-section${a.hash}`,
+  ));
+  function jump(event) {
+    const link = event.target.closest("a");
+    if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const target = targets[links.indexOf(link)];
+    if (!target) return;
+    event.preventDefault();
+    history.pushState(null, "", link.hash);
+    target.scrollIntoView({ behavior: reducedMotion.matches ? "instant" : "smooth" });
+  }
+  nav.addEventListener("click", jump);
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  let frame = 0;
+  function update() {
+    frame = 0;
+    if (!nav.getClientRects().length) return;
+    const y = window.scrollY;
+    const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    const stops = targets.map((el) => Math.max(0, Math.min(max, el.getBoundingClientRect().top + y - 120)));
+    // Reserve scroll distance for the final sections instead of collapsing
+    // several markers onto the same bottom-of-page position.
+    const minimumSpan = Math.min(180, max / Math.max(1, stops.length - 1));
+    for (let i = stops.length - 2; i >= 0; i--) {
+      stops[i] = Math.min(stops[i], stops[i + 1] - minimumSpan);
+    }
+    let index = 0;
+    while (index < stops.length - 1 && y >= stops[index + 1]) index++;
+    const next = Math.min(index + 1, stops.length - 1);
+    const span = stops[next] - stops[index];
+    const progress = span > 0 ? Math.max(0, Math.min(1, (y - stops[index]) / span)) : 0;
+    const centers = links.map((a) => a.offsetTop + a.offsetHeight / 2);
+    const top = centers[0];
+    const position = centers[index] + (centers[next] - centers[index]) * progress;
+    nav.style.setProperty("--rail-top", `${top}px`);
+    nav.style.setProperty("--rail-height", `${centers.at(-1) - top}px`);
+    nav.style.setProperty("--star-y", `${position}px`);
+    nav.style.setProperty("--trail-height", `${position - top}px`);
+    nav.style.setProperty("--star-turn", `${reducedMotion.matches ? 0 : y * 0.18}deg`);
+    links.forEach((a, i) => {
+      if (i === index) a.setAttribute("aria-current", "location");
+      else a.removeAttribute("aria-current");
+    });
+  }
+  function schedule() { if (!frame) frame = requestAnimationFrame(update); }
+  const observer = new ResizeObserver(schedule);
+  observer.observe(document.querySelector("#content"));
+  observer.observe(nav);
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule);
+  reducedMotion.addEventListener("change", schedule);
+  schedule();
+  return () => {
+    cancelAnimationFrame(frame);
+    observer.disconnect();
+    nav.removeEventListener("click", jump);
+    window.removeEventListener("scroll", schedule);
+    window.removeEventListener("resize", schedule);
+    reducedMotion.removeEventListener("change", schedule);
+  };
+}
 function route() {
+  destroyPageTimeline?.();
+  destroyPageTimeline = null;
   renderedPath = location.pathname;
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
   codeEditor = null;
@@ -397,8 +487,9 @@ function route() {
   $("#page-nav").hidden = !selected;
   if (selected) {
     $("#page-nav").innerHTML =
-      `<button id="copy-page">Copy page ${icons.copy}</button><nav aria-label="On this page"><a href="#preview">Preview</a>${sections.map(([id, title]) => `<a href="#${id}">${title}</a>`).join("")}</nav>`;
+      `<button id="copy-page">Copy page ${icons.copy}</button><nav class="page-timeline" aria-label="On this page"><span class="timeline-rail" aria-hidden="true"></span><span class="timeline-star" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M10 0 12.5 7.5 20 10 12.5 12.5 10 20 7.5 12.5 0 10 7.5 7.5Z" fill="currentColor"/></svg></span><a href="#preview">Preview</a>${sections.map(([id, title]) => `<a href="#${id}">${title}</a>`).join("")}</nav>`;
     bindDetail();
+    destroyPageTimeline = bindPageTimeline();
   }
   document.title = selected
     ? `Stefan’s Spinners › ${selected.name}`
@@ -412,20 +503,28 @@ function route() {
   closeMenu();
   if (location.hash) {
     requestAnimationFrame(() =>
-      document.getElementById(location.hash.slice(1))?.scrollIntoView(),
+      ([...document.querySelectorAll(".docs-section")].find((section) => section.id === location.hash.slice(1)) || document.getElementById(location.hash.slice(1)))?.scrollIntoView(),
     );
   }
 }
-function navigate(href) {
+function navigate(href, source = null) {
+  const nextPath = new URL(href, location.href).pathname.replace(/\/+$/, "");
+  if (source && nextPath.startsWith("/spinners/") && nextPath !== location.pathname.replace(/\/+$/, "")) {
+    const box = (source.querySelector(".card-preview") || source).getBoundingClientRect();
+    scrollStars.nudgeTo(box.left + box.width / 2, box.top + box.height / 2);
+  }
   if ($("#search-dialog").open) $("#search-dialog").close();
   history.pushState(null, "", href);
   route();
   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  scrollStars.resetScroll();
   $("#content").focus({ preventScroll: true });
 }
 window.addEventListener("popstate", () => {
-  // Anchor navigation keeps the current preview settings and native smooth scroll.
-  if (location.pathname !== renderedPath) route();
+  if (location.pathname !== renderedPath) {
+    route();
+    scrollStars.resetScroll();
+  }
 });
 function readCode(figure) {
   if (figure.id === "live-code") return codeEditor.read();
@@ -445,7 +544,7 @@ document.addEventListener("click", (e) => {
   ) {
     e.preventDefault();
     if (link.classList.contains("brand-link")) animateBrandLogos();
-    navigate(link.getAttribute("href"));
+    navigate(link.getAttribute("href"), link);
     return;
   }
   const copyButton = e.target.closest("[data-copy],.copy-code");
